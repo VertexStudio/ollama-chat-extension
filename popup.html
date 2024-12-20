@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ollama Chat</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.1/markdown-it.min.js"></script>
+  <style>
+    body {
+      width: 400px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+    }
+    #chat-container {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+    .message {
+      margin-bottom: 10px;
+      padding: 5px;
+      border-radius: 5px;
+    }
+    .user-message {
+      background-color: #e3f2fd;
+    }
+    .assistant-message {
+      background-color: #f5f5f5;
+    }
+    #input-container {
+      display: flex;
+      gap: 5px;
+    }
+    #user-input {
+      flex-grow: 1;
+    }
+    #settings-container {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="settings-container">
+    <label for="server-url">Ollama Server URL:</label>
+    <input type="text" id="server-url" value="http://localhost:11434">
+    <label for="model-name">Model:</label>
+    <input type="text" id="model-name" value="mistral">
+    <button id="save-settings">Save Settings</button>
+  </div>
+  <div id="chat-container"></div>
+  <div id="input-container">
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button id="send-button">Send</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

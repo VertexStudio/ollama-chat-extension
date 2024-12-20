@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Ollama Chat Extension",
+  "version": "1.0",
+  "description": "Chat with website contents using locally installed Ollama",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "host_permissions": [
+    "http://localhost:11434/*"
+  ]
+} 
