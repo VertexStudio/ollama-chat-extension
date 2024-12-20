@@ -1,56 +1,67 @@
 let pageContent = '';
 let settings = {
   serverUrl: 'http://localhost:11434',
-  modelName: 'mistral'
+  modelName: 'unknown'
 };
 
-// Load settings on popup open
-chrome.storage.local.get(['serverUrl', 'modelName'], (result) => {
-  if (result.serverUrl) {
-    settings.serverUrl = result.serverUrl;
-    document.getElementById('server-url').value = result.serverUrl;
-  }
-  if (result.modelName) {
-    settings.modelName = result.modelName;
-    document.getElementById('model-name').value = result.modelName;
-  }
-});
-
-// Save settings
-document.getElementById('save-settings').addEventListener('click', () => {
-  settings.serverUrl = document.getElementById('server-url').value;
-  settings.modelName = document.getElementById('model-name').value;
-  chrome.storage.local.set({
-    serverUrl: settings.serverUrl,
-    modelName: settings.modelName
-  }, () => {
-    alert('Settings saved!');
+// Initialize markdown-it
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize markdown-it with configuration
+  window.md = window.markdownit({
+    html: false,
+    xhtmlOut: false,
+    breaks: true,
+    linkify: true,
+    typographer: true
   });
-});
 
-// Extract page content when popup opens
-chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
-  const tab = tabs[0];
-  const results = await chrome.scripting.executeScript({
-    target: {tabId: tab.id},
-    function: () => {
-      // Remove script tags and unnecessary whitespace
-      const cleanContent = document.body.innerText
-        .replace(/\s+/g, ' ')
-        .trim();
-      return cleanContent;
+  // Load settings
+  chrome.storage.local.get(['serverUrl', 'modelName'], (result) => {
+    if (result.serverUrl) {
+      settings.serverUrl = result.serverUrl;
+      document.getElementById('server-url').value = result.serverUrl;
+    }
+    if (result.modelName) {
+      settings.modelName = result.modelName;
+      document.getElementById('model-name').value = result.modelName;
     }
   });
-  pageContent = results[0].result;
-  appendMessage('System', 'Connected to page. You can now chat about its contents.');
-});
 
-// Handle sending messages
-document.getElementById('send-button').addEventListener('click', sendMessage);
-document.getElementById('user-input').addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
-    sendMessage();
-  }
+  // Setup event listeners
+  document.getElementById('save-settings').addEventListener('click', () => {
+    settings.serverUrl = document.getElementById('server-url').value;
+    settings.modelName = document.getElementById('model-name').value;
+    chrome.storage.local.set({
+      serverUrl: settings.serverUrl,
+      modelName: settings.modelName
+    }, () => {
+      alert('Settings saved!');
+    });
+  });
+
+  document.getElementById('send-button').addEventListener('click', sendMessage);
+  document.getElementById('user-input').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  });
+
+  // Extract page content
+  chrome.tabs.query({active: true, currentWindow: true}, async (tabs) => {
+    const tab = tabs[0];
+    const results = await chrome.scripting.executeScript({
+      target: {tabId: tab.id},
+      function: () => {
+        // Remove script tags and unnecessary whitespace
+        const cleanContent = document.body.innerText
+          .replace(/\s+/g, ' ')
+          .trim();
+        return cleanContent;
+      }
+    });
+    pageContent = results[0].result;
+    appendMessage('System', 'Connected to page. You can now chat about its contents.');
+  });
 });
 
 async function sendMessage() {
@@ -114,7 +125,14 @@ function appendMessage(sender, text, messageId = null) {
   if (messageId) {
     messageDiv.id = `message-${messageId}`;
   }
-  messageDiv.textContent = text;
+  
+  // Only use markdown for Assistant messages and ensure markdown-it is ready
+  if (sender === 'Assistant' && window.md) {
+    messageDiv.innerHTML = window.md.render(text);
+  } else {
+    messageDiv.textContent = text;
+  }
+  
   chatContainer.appendChild(messageDiv);
   chatContainer.scrollTop = chatContainer.scrollHeight;
   return messageDiv;
