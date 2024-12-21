@@ -3,6 +3,9 @@
   "name": "Ollama Chat Extension",
   "version": "1.0",
   "description": "Chat with website contents using locally installed Ollama",
+  "background": {
+    "service_worker": "background.js"
+  },
   "permissions": [
     "activeTab",
     "storage",
@@ -18,4 +21,4 @@
   "host_permissions": [
     "http://localhost:11434/*"
   ]
-} 
+}
