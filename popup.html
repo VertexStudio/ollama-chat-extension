@@ -7,7 +7,7 @@
   <script src="libs/markdown-it.min.js"></script>
   <style>
     body {
-      width: 350px;
+      width: 400px;
       padding: 10px;
       font-family: Arial, sans-serif;
       padding-bottom: 40px;
@@ -17,7 +17,7 @@
 
     /* Chat container styling with flex layout */
     #chat-container {
-      height: 250px;
+      height: 400px;
       overflow-y: auto;
       margin-bottom: 8px;
       display: flex;
@@ -147,6 +147,13 @@
     }
 
     /* Improved scrollbar styling */
+    #chat-container {
+      scrollbar-width: thin;
+      /* For Firefox */
+      -ms-overflow-style: auto;
+      /* For Internet Explorer and Edge */
+    }
+
     #chat-container::-webkit-scrollbar {
       width: 8px;
     }
@@ -154,21 +161,31 @@
     #chat-container::-webkit-scrollbar-track {
       background: #f1f1f1;
       border-radius: 4px;
+      opacity: 0.5;
     }
 
     #chat-container::-webkit-scrollbar-thumb {
       background: #888;
       border-radius: 4px;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
     }
 
     #chat-container::-webkit-scrollbar-thumb:hover {
       background: #555;
+      opacity: 1;
+    }
+
+    /* Make scrollbar semi-transparent when not in use */
+    #chat-container:not(:hover)::-webkit-scrollbar-thumb {
+      opacity: 0.3;
     }
   </style>
 </head>
 
 <body>
-  <button id="settings-button" style="position: absolute; top: 10px; right: 10px; padding: 4px; background-color: #666; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">⚙️</button>
+  <button id="settings-button"
+    style="position: absolute; top: 10px; right: 10px; padding: 4px; background-color: #666; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">⚙️</button>
   <div id="chat-container"></div>
   <div id="input-container">
     <textarea id="user-input" placeholder="Type your message..." rows="1"></textarea>

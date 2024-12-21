@@ -21,11 +21,15 @@
   "host_permissions": [
     "http://localhost:11434/*"
   ],
-  "web_accessible_resources": [{
-    "resources": [
-      "popup.html",
-      "settings.html"
-    ],
-    "matches": ["<all_urls>"]
-  }]
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.html",
+        "settings.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
 }
