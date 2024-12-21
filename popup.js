@@ -39,10 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const results = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        function: () => document.body.innerText.replace(/\s+/g, ' ').trim()
+        function: () => ({
+          content: document.body.innerText.replace(/\s+/g, ' ').trim(),
+          title: document.title
+        })
       });
-      pageContent = results[0].result;
-      appendMessage('System', 'Connected to page. You can now chat about its contents.');
+      pageContent = results[0].result.content;
+      const pageTitle = results[0].result.title;
+      appendMessage('System', `Connected to page: "${pageTitle}". You can now chat about its contents.`);
     } catch (error) {
       console.error('Error accessing page content:', error);
       appendMessage('System', `Unable to access page content (${error.message}). This is normal for certain pages like chrome:// URLs.`);
