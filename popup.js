@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     linkify: true
   });
 
+  // Add this line to focus the input when popup opens
+  document.getElementById('user-input').focus();
+
   // Load settings and initialize message history
   chrome.storage.local.get(['serverUrl', 'modelName', 'messageHistory'], (result) => {
     if (result.serverUrl) {

@@ -6,28 +6,29 @@
   <script src="libs/markdown-it.min.js"></script>
   <style>
     body {
-      width: 400px;
-      padding: 20px;
+      width: 350px;
+      padding: 10px;
       font-family: Arial, sans-serif;
-      padding-bottom: 80px;
+      padding-bottom: 40px;
       margin: 0 auto;
+      font-size: 14px;
     }
 
     /* Chat container styling with flex layout */
     #chat-container {
-      height: 300px;
+      height: 250px;
       overflow-y: auto;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: flex;
       flex-direction: column;
     }
 
     /* Base message styling */
     .message {
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 10px;
-      max-width: 80%;
+      margin-bottom: 6px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      max-width: 85%;
     }
 
     .user-message {
@@ -52,54 +53,58 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 20px;
+      padding: 4px;
       background-color: white;
       box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
       display: flex;
-      gap: 5px;
+      gap: 4px;
       border-radius: 10px 10px 0 0;
     }
 
     #user-input {
       flex-grow: 1;
-      padding: 10px;
+      padding: 8px;
       border-radius: 5px;
       border: 1px solid #ccc;
       resize: none;
-      min-height: 20px;
-      max-height: 100px;
+      min-height: 14px;
+      max-height: 60px;
       overflow-y: auto;
+      font-size: 14px;
     }
 
     #settings-container {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .settings-row {
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
     }
 
     .settings-row label {
-      width: 120px;
+      width: 100px;
       font-weight: 500;
+      font-size: 14px;
     }
 
     .settings-row input {
       flex-grow: 1;
-      padding: 5px;
+      padding: 3px;
       border-radius: 4px;
       border: 1px solid #ccc;
+      font-size: 14px;
     }
 
     #save-settings {
-      padding: 8px 16px;
+      padding: 6px 12px;
       background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 14px;
     }
 
     #save-settings:hover {
@@ -109,10 +114,10 @@
     /* Markdown styling */
     .assistant-message pre {
       background-color: #f8f8f8;
-      padding: 8px;
+      padding: 6px;
       border-radius: 4px;
       overflow-x: auto;
-      margin: 8px 0;
+      margin: 6px 0;
     }
 
     .assistant-message code {
@@ -123,12 +128,12 @@
     }
 
     .assistant-message p {
-      margin: 8px 0;
+      margin: 6px 0;
     }
 
     /* Send button styling */
     #send-button {
-      padding: 8px 16px;
+      padding: 3px 10px;
       background-color: #007bff;
       color: white;
       border: none;
