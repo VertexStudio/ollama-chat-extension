@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ollama Chat Settings</title>
+  <style>
+    body {
+      width: 350px;
+      padding: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .settings-container {
+      margin-bottom: 10px;
+    }
+
+    .settings-row {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .settings-row label {
+      margin-bottom: 4px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .settings-row input {
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .button {
+      padding: 8px 16px;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    #save-settings {
+      background-color: #4CAF50;
+      margin-bottom: 8px;
+    }
+
+    #save-settings:hover {
+      background-color: #45a049;
+    }
+
+    #back-button {
+      background-color: #666;
+    }
+
+    #back-button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="settings-container">
+    <div class="settings-row">
+      <label for="server-url">Ollama Server URL:</label>
+      <input type="text" id="server-url" value="http://localhost:11434">
+    </div>
+    <div class="settings-row">
+      <label for="model-name">Model:</label>
+      <input type="text" id="model-name" value="mistral">
+    </div>
+    <button id="save-settings" class="button">Save Settings</button>
+    <button id="back-button" class="button">Back to Chat</button>
+  </div>
+  <script src="settings.js"></script>
+</body>
+</html> 

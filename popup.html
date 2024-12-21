@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <meta charset="UTF-8">
   <title>Ollama Chat</title>
   <script src="libs/markdown-it.min.js"></script>
   <style>
@@ -167,17 +168,7 @@
 </head>
 
 <body>
-  <div id="settings-container">
-    <div class="settings-row">
-      <label for="server-url">Ollama Server URL:</label>
-      <input type="text" id="server-url" value="http://localhost:11434">
-    </div>
-    <div class="settings-row">
-      <label for="model-name">Model:</label>
-      <input type="text" id="model-name" value="mistral">
-    </div>
-    <button id="save-settings">Save Settings</button>
-  </div>
+  <button id="settings-button" style="position: absolute; top: 10px; right: 10px; padding: 4px; background-color: #666; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">⚙️</button>
   <div id="chat-container"></div>
   <div id="input-container">
     <textarea id="user-input" placeholder="Type your message..." rows="1"></textarea>

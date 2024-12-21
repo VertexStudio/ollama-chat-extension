@@ -21,18 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
   chrome.storage.local.get(['serverUrl', 'modelName', 'messageHistory'], (result) => {
     if (result.serverUrl) {
       settings.serverUrl = result.serverUrl;
-      document.getElementById('server-url').value = result.serverUrl;
     }
     if (result.modelName) {
       settings.modelName = result.modelName;
-      document.getElementById('model-name').value = result.modelName;
     }
 
     // Initialize message history only if it doesn't exist
     messageHistory = [];
   });
 
-  document.getElementById('save-settings').addEventListener('click', saveSettings);
   document.getElementById('send-button').addEventListener('click', sendMessage);
   setupTextarea();
 
@@ -59,6 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const isAtBottom = chatContainer.scrollHeight - chatContainer.scrollTop <= chatContainer.clientHeight + 1;
     autoScroll = isAtBottom;
   });
+
+  // Add settings button handler
+  document.getElementById('settings-button').addEventListener('click', () => {
+    window.location.href = 'settings.html';
+  });
 });
 
 function setupTextarea() {
@@ -77,17 +79,6 @@ function setupTextarea() {
       e.preventDefault();
       sendMessage();
     }
-  });
-}
-
-function saveSettings() {
-  settings.serverUrl = document.getElementById('server-url').value;
-  settings.modelName = document.getElementById('model-name').value;
-  chrome.storage.local.set({
-    serverUrl: settings.serverUrl,
-    modelName: settings.modelName
-  }, () => {
-    appendMessage('System', 'Settings saved successfully!');
   });
 }
 
