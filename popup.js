@@ -4,6 +4,7 @@ let settings = {
   modelName: 'llama3.2'
 };
 let messageHistory = [];
+let autoScroll = true;
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize markdown-it
@@ -47,6 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
       appendMessage('System', `Unable to access page content (${error.message}). This is normal for certain pages like chrome:// URLs.`);
       pageContent = 'Page content not accessible';
     }
+  });
+
+  // Add scroll event listener to chat container
+  const chatContainer = document.getElementById('chat-container');
+  chatContainer.addEventListener('scroll', () => {
+    const isAtBottom = chatContainer.scrollHeight - chatContainer.scrollTop <= chatContainer.clientHeight + 1;
+    autoScroll = isAtBottom;
   });
 });
 
@@ -92,7 +100,9 @@ function appendMessage(sender, content) {
   }
 
   chatContainer.appendChild(messageDiv);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
+  if (autoScroll) {
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
 
   if (sender !== 'System') {
     messageHistory.push({
@@ -136,7 +146,9 @@ async function processStreamingResponse(response, messageDiv) {
             messageDiv.innerHTML = window.md.render(accumulatedContent);
 
             const chatContainer = document.getElementById('chat-container');
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            if (autoScroll) {
+              chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
           }
 
           if (data.done) {
