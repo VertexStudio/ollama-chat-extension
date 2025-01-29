@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Add this line to focus the input when popup opens
   document.getElementById('user-input').focus();
 
-  // Load settings and initialize message history
-  chrome.storage.local.get(['serverUrl', 'modelName', 'context_length', 'messageHistory'], (result) => {
+  // Load settings only
+  chrome.storage.local.get(['serverUrl', 'modelName', 'context_length'], (result) => {
     if (result.serverUrl) {
       settings.serverUrl = result.serverUrl;
     }
@@ -29,9 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (result.context_length) {
       settings.context_length = parseInt(result.context_length);
     }
-
-    // Initialize message history only if it doesn't exist
-    messageHistory = [];
   });
 
   document.getElementById('send-button').addEventListener('click', sendMessage);
