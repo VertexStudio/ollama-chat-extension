@@ -1,7 +1,8 @@
 let pageContent = '';
 let settings = {
   serverUrl: 'http://localhost:11434',
-  modelName: 'llama3.2'
+  modelName: 'deepseek-r1:8b',
+  context_length: 131072
 };
 let messageHistory = [];
 let autoScroll = true;
@@ -18,12 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('user-input').focus();
 
   // Load settings and initialize message history
-  chrome.storage.local.get(['serverUrl', 'modelName', 'messageHistory'], (result) => {
+  chrome.storage.local.get(['serverUrl', 'modelName', 'context_length', 'messageHistory'], (result) => {
     if (result.serverUrl) {
       settings.serverUrl = result.serverUrl;
     }
     if (result.modelName) {
       settings.modelName = result.modelName;
+    }
+    if (result.context_length) {
+      settings.context_length = parseInt(result.context_length);
     }
 
     // Initialize message history only if it doesn't exist
@@ -47,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pageContent = results[0].result.content;
       const pageTitle = results[0].result.title;
       appendMessage('System', `Connected to page: "${pageTitle}". You can now chat about its contents.`);
-      
+
       // Add page content to message history immediately
       messageHistory.push({
         role: 'system',
@@ -229,7 +233,7 @@ async function sendMessage() {
         messages: messages,
         stream: true,
         options: {
-          num_ctx: 131072
+          num_ctx: settings.context_length
         }
       })
     });

@@ -1,26 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Load existing settings
-    chrome.storage.local.get(['serverUrl', 'modelName'], (result) => {
+    chrome.storage.local.get(['serverUrl', 'modelName', 'context_length'], (result) => {
+        const serverUrlInput = document.getElementById('server-url');
+        const modelNameInput = document.getElementById('model-name');
+        const contextLengthInput = document.getElementById('context-length');
+
+        // Check if elements exist before accessing
+        if (!serverUrlInput || !modelNameInput || !contextLengthInput) {
+            console.error('Missing required form elements:', {
+                serverUrl: !!serverUrlInput,
+                modelName: !!modelNameInput,
+                contextLength: !!contextLengthInput
+            });
+            return;
+        }
+
         if (result.serverUrl) {
-            document.getElementById('server-url').value = result.serverUrl;
+            serverUrlInput.value = result.serverUrl;
         }
         if (result.modelName) {
-            document.getElementById('model-name').value = result.modelName;
+            modelNameInput.value = result.modelName;
+        }
+        if (result.context_length) {
+            contextLengthInput.value = result.context_length;
         }
     });
 
     // Save settings handler
-    document.getElementById('save-settings').addEventListener('click', () => {
-        const serverUrl = document.getElementById('server-url').value;
-        const modelName = document.getElementById('model-name').value;
+    const saveButton = document.getElementById('save-settings');
+    if (saveButton) {
+        saveButton.addEventListener('click', () => {
+            const serverUrlInput = document.getElementById('server-url');
+            const modelNameInput = document.getElementById('model-name');
+            const contextLengthInput = document.getElementById('context-length');
 
-        chrome.storage.local.set({
-            serverUrl: serverUrl,
-            modelName: modelName
-        }, () => {
-            window.location.href = 'popup.html';
+            if (!serverUrlInput || !modelNameInput || !contextLengthInput) {
+                console.error('Missing required form elements for saving');
+                return;
+            }
+
+            chrome.storage.local.set({
+                serverUrl: serverUrlInput.value,
+                modelName: modelNameInput.value,
+                context_length: contextLengthInput.value
+            }, () => {
+                window.location.href = 'popup.html';
+            });
         });
-    });
+    }
 
     // Back button handler
     document.getElementById('back-button').addEventListener('click', () => {
