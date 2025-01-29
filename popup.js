@@ -47,6 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
       pageContent = results[0].result.content;
       const pageTitle = results[0].result.title;
       appendMessage('System', `Connected to page: "${pageTitle}". You can now chat about its contents.`);
+      
+      // Add page content to message history immediately
+      messageHistory.push({
+        role: 'system',
+        content: `Page content: ${pageContent}`
+      });
     } catch (error) {
       console.error('Error accessing page content:', error);
       appendMessage('System', `Unable to access page content (${error.message}). This is normal for certain pages like chrome:// URLs.`);
@@ -206,11 +212,7 @@ async function sendMessage() {
         role: 'system',
         content: 'You are a helpful AI assistant that analyzes web page content.'
       },
-      {
-        role: 'system',
-        content: `Page content: ${pageContent}`
-      },
-      ...messageHistory,
+      ...messageHistory,  // page content will now come from here
       {
         role: 'user',
         content: message
@@ -225,7 +227,10 @@ async function sendMessage() {
       body: JSON.stringify({
         model: settings.modelName,
         messages: messages,
-        stream: true
+        stream: true,
+        options: {
+          num_ctx: 131072
+        }
       })
     });
 
