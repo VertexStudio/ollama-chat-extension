@@ -24,6 +24,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (result.context_length) {
             contextLengthInput.value = result.context_length;
         }
+
+        // Add test connection button handler
+        const testConnectionButton = document.getElementById('test-connection');
+        if (testConnectionButton) {
+            testConnectionButton.addEventListener('click', async () => {
+                const serverUrl = document.getElementById('server-url').value;
+                testConnectionButton.disabled = true;
+                testConnectionButton.textContent = 'Testing...';
+                
+                try {
+                    const response = await fetch(`${serverUrl}/api/tags`);
+                    if (response.ok) {
+                        alert('Connection successful! Ollama is reachable.');
+                    } else {
+                        alert('Connection failed. Make sure Ollama is running and the URL is correct.');
+                    }
+                } catch (error) {
+                    alert('Connection failed. Error: ' + error.message);
+                } finally {
+                    testConnectionButton.disabled = false;
+                    testConnectionButton.textContent = 'Test Connection';
+                }
+            });
+        }
     });
 
     // Save settings handler
