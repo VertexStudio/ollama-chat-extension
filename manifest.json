@@ -19,7 +19,8 @@
     "128": "icon128.png"
   },
   "host_permissions": [
-    "http://localhost:11434/*"
+    "http://localhost:11434/*",
+    "https://*.proxy.runpod.net/*"
   ],
   "web_accessible_resources": [
     {
