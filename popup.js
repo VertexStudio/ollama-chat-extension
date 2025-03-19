@@ -1,8 +1,8 @@
 let pageContent = '';
 let settings = {
   serverUrl: 'http://localhost:11434',
-  modelName: 'deepseek-r1:8b',
-  context_length: 131072
+  modelName: 'qwq',
+  context_length: 20480
 };
 let messageHistory = [];
 let autoScroll = true;
