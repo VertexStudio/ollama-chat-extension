@@ -18,3 +18,15 @@ This extension allows you to chat with websites using your local Ollama models.
 
 ## Screenshot
 ![Ollama Chat Extension Screenshot](screenshot.png)
+
+## Launch Ollama:
+```
+OLLAMA_KEEP_ALIVE=1h OLLAMA_ORIGINS=* OLLAMA_HOST=0.0.0.0:11434
+```
+
+using Ollama OSX app:
+```
+launchctl setenv OLLAMA_KEEP_ALIVE "1h"
+launchctl setenv OLLAMA_ORIGINS "*"
+launchctl setenv OLLAMA_HOST "0.0.0.0:11434"
+```
